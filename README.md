@@ -1,10 +1,16 @@
 # SRED
+For a fixed receive filter, we can reformulate the optimization problem with respect to $\mathbf{s}$ as follows:
+\begin{equation}\label{eq:prob_sinr_s}
+    \max_{\mathbf{s}\in{\mathcal{S}^{N_tN}}}\ \min_{\forall m}\ \sinr_m(\mathbf{s},\bw_{m,\text{opt}})
+    =\frac{\mathbf{s}^H\mathbf{H}_m(\bw_{m,\text{opt}})\mathbf{s}}{\mathbf{s}^H\mathbf{G}_m(\bw_{m,\text{opt}})\mathbf{s}}
+\end{equation}
+
 As we solve \eqref{eq:prob_sinr_s} with fixed $\mathbf{w}_m\ \forall m$, we simplify $\mathbf{G}_m=\mathbf{G}_m(\mathbf{w}_m)$ and $\mathbf{H}_m=\mathbf{H}_m(\mathbf{w}_m)$ for brevity from this section.
 To enforce a waveform to satisfy the constant modulus constraint (CMC) in \eqref{eq:prob_sinr_s}, we aim to optimize the phase variable $\boldsymbol{\phi}$ such that $\boldsymbol{\phi}=[\phi_1,...,\phi_{N_tN}]^T$ and $e^{j\phi_i}=\sqrt{N_tN}s_i$ for $i=1,...,N_tN$. Therefore, any change in $\boldsymbol{\phi}$ still guarantees the CMC. Additionally, we reformulate the problem in \eqref{eq:prob_sinr_s} as following with a lemma:
 \begin{lemma}\label{lemma:minimax}
     The local minima of the following problem such that $\mathbf{s}^H\mathbf{G}_m\mathbf{s}\neq 0$ and $\mathbf{s}^H\mathbf{H}_m\mathbf{s}\neq 0$ are equivalent to the ones of the problem in \eqref{eq:prob_sinr_s}.
     \begin{equation}\label{eq:prob_minimax}
-        \min_{\mathbf{s}\in{\cS^{N_tN}}}\ \max_{\forall m}\ \frac{1}{	ext{SINR}_m(\mathbf{s},\cdot)}
+        \min_{\mathbf{s}\in{\mathcal{S}^{N_tN}}}\ \max_{\forall m}\ \frac{1}{	ext{SINR}_m(\mathbf{s},\cdot)}
         =\frac{\mathbf{s}^H\mathbf{G}_m\mathbf{s}}{\mathbf{s}^H\mathbf{H}_m\mathbf{s}}.
     \end{equation}
 \end{lemma}
