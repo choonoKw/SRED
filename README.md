@@ -1,7 +1,13 @@
 # SRED
 For a fixed receive filter, we can reformulate the optimization problem with respect to $\mathbf{s}$ as follows:
-$$ a + b = c$$
-$$\max_{\mathbf{s}\in{\mathcal{S}^{N_tN}}}\ \min_{\forall m}\ \sinr_m(\mathbf{s},\bw_{m,\text{opt}})=\frac{\mathbf{s}^H\mathbf{H}_m(\bw_{m,\text{opt}})\mathbf{s}}{\mathbf{s}^H\mathbf{G}_m(\bw_{m,\text{opt}})\mathbf{s}}$$[equation id]
+
+$$ a + b = c$$[equation id]
+
+$$\max_{\mathbf{s}\in{\mathcal{S}^{N_tN}}}\ \min_{\forall m}\ \text{SINR}_m(\mathbf{s},\mathbf{w}_{m,\text{opt}})$$
+
+$$$$
+
+$$=\frac{\mathbf{s}^H\mathbf{H}_m(\mathbf{w}_{m,\text{opt}})\mathbf{s}}{\mathbf{s}^H\mathbf{G}_m(\mathbf{w}_{m,\text{opt}})\mathbf{s}}$$
 
 As we solve \eqref{eq:prob_sinr_s} with fixed $\mathbf{w}_m\ \forall m$, we simplify $\mathbf{G}_m=\mathbf{G}_m(\mathbf{w}_m)$ and $\mathbf{H}_m=\mathbf{H}_m(\mathbf{w}_m)$ for brevity from this section.
 To enforce a waveform to satisfy the constant modulus constraint (CMC) in \eqref{eq:prob_sinr_s}, we aim to optimize the phase variable $\boldsymbol{\phi}$ such that $\boldsymbol{\phi}=[\phi_1,...,\phi_{N_tN}]^T$ and $e^{j\phi_i}=\sqrt{N_tN}s_i$ for $i=1,...,N_tN$. Therefore, any change in $\boldsymbol{\phi}$ still guarantees the CMC. Additionally, we reformulate the problem in \eqref{eq:prob_sinr_s} as following with a lemma:
