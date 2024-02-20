@@ -2,10 +2,10 @@
 As we solve \eqref{eq:prob_sinr_s} with fixed $\mathbf{w}_m\ \forall m$, we simplify $\mathbf{G}_m=\mathbf{G}_m(\mathbf{w}_m)$ and $\mathbf{H}_m=\mathbf{H}_m(\mathbf{w}_m)$ for brevity from this section.
 To enforce a waveform to satisfy the \gls{cmc} in \eqref{eq:prob_sinr_s}, we aim to optimize the phase variable $\boldsymbol{\phi}$ such that $\boldsymbol{\phi}=[\phi_1,...,\phi_{N_tN}]^T$ and $e^{j\phi_i}=\sqrt{N_tN}s_i$ for $i=1,...,N_tN$. Therefore, any change in $\boldsymbol{\phi}$ still guarantees the \gls{cmc}. Additionally, we reformulate the problem in \eqref{eq:prob_sinr_s} as following with a lemma:
 \begin{lemma}\label{lemma:minimax}
-    The local minima of the following problem such that $\bs^H\mathbf{G}_m\bs\neq 0$ and $\bs^H\mathbf{H}_m\bs\neq 0$ are equivalent to the ones of the problem in \eqref{eq:prob_sinr_s}.
+    The local minima of the following problem such that $\mathbf{s}^H\mathbf{G}_m\mathbf{s}\neq 0$ and $\mathbf{s}^H\mathbf{H}_m\mathbf{s}\neq 0$ are equivalent to the ones of the problem in \eqref{eq:prob_sinr_s}.
     \begin{equation}\label{eq:prob_minimax}
-        \min_{\bs\in{\cS^{N_tN}}}\ \max_{\forall m}\ \frac{1}{	ext{SINR}_m(\bs,\cdot)}
-        =\frac{\bs^H\mathbf{G}_m\bs}{\bs^H\mathbf{H}_m\bs}.
+        \min_{\mathbf{s}\in{\cS^{N_tN}}}\ \max_{\forall m}\ \frac{1}{	ext{SINR}_m(\mathbf{s},\cdot)}
+        =\frac{\mathbf{s}^H\mathbf{G}_m\mathbf{s}}{\mathbf{s}^H\mathbf{H}_m\mathbf{s}}.
     \end{equation}
 \end{lemma}
 
@@ -18,22 +18,22 @@ However, minimax problems, especially in nonconvex setting, is hard to solve dir
 \begin{equation}
 \begin{split}
     \min_\boldsymbol{\phi} f(\boldsymbol{\phi})=\sum_{m=1}^Mf_m(\boldsymbol{\phi})
-    &=\sum_{m=1}^M\frac{1}{	ext{SINR}_m\left(\bs(\boldsymbol{\phi}),\cdot\right)}\\
-    &=\sum_{m=1}^M\frac{\bs^H(\boldsymbol{\phi})\mathbf{G}_m\bs(\boldsymbol{\phi})}
-    {\bs^H(\boldsymbol{\phi})\mathbf{H}_m\bs(\boldsymbol{\phi})}.
+    &=\sum_{m=1}^M\frac{1}{	ext{SINR}_m\left(\mathbf{s}(\boldsymbol{\phi}),\cdot\right)}\\
+    &=\sum_{m=1}^M\frac{\mathbf{s}^H(\boldsymbol{\phi})\mathbf{G}_m\mathbf{s}(\boldsymbol{\phi})}
+    {\mathbf{s}^H(\boldsymbol{\phi})\mathbf{H}_m\mathbf{s}(\boldsymbol{\phi})}.
 \end{split}
 \label{eq:fphi}   
 \end{equation}
-where $f_m(\boldsymbol{\phi})$ is the reciprocal of $	ext{SINR}_m(\bs(\boldsymbol{\phi}),\cdot)$. The choice of this new cost function is motivated from the efficiency of utilizing its exact descent (negative gradient) to maximize the worst-case \gls{sinr}, which is described in the following section.
+where $f_m(\boldsymbol{\phi})$ is the reciprocal of $	ext{SINR}_m(\mathbf{s}(\boldsymbol{\phi}),\cdot)$. The choice of this new cost function is motivated from the efficiency of utilizing its exact descent (negative gradient) to maximize the worst-case \gls{sinr}, which is described in the following section.
 
 \subsection{Exact-Gradient of the Sum-of-Reciprocals}
 
-The motivations of formulating \eqref{eq:fphi} is 1) minimizing $f(\boldsymbol{\phi})$ can lead maximization of overall \gls{sinr}s, and 2) the gradient of the cost function can guide enhancing the worst case of \gls{sinr} among $K$ targets analytically. Expressing $\bs=\bs(\boldsymbol{\phi})$ for brevity, the gradient of the cost function becomes 
+The motivations of formulating \eqref{eq:fphi} is 1) minimizing $f(\boldsymbol{\phi})$ can lead maximization of overall \gls{sinr}s, and 2) the gradient of the cost function can guide enhancing the worst case of \gls{sinr} among $K$ targets analytically. Expressing $\mathbf{s}=\mathbf{s}(\boldsymbol{\phi})$ for brevity, the gradient of the cost function becomes 
 \begin{equation}\label{eq:grad_f_phi}
 \begin{split}
     &\nabla_\boldsymbol{\phi} f(\boldsymbol{\phi})=\sum_{m=1}^M \nabla_\boldsymbol{\phi} f_m(\boldsymbol{\phi})\\
-    &=\sum_{m=1}^M\frac{-1}{\{	ext{SINR}_m(\bs,\mathbf{w}_m)\}^2}
-    \nabla_\boldsymbol{\phi} 	ext{SINR}_m(\bs,\mathbf{w}_m),
+    &=\sum_{m=1}^M\frac{-1}{\{	ext{SINR}_m(\mathbf{s},\mathbf{w}_m)\}^2}
+    \nabla_\boldsymbol{\phi} 	ext{SINR}_m(\mathbf{s},\mathbf{w}_m),
 \end{split}
 \end{equation}
 which is weighted-some of $\nabla_\boldsymbol{\phi} 	ext{SINR}_m(\cdot)$ for $m=1,...,M$. Notably, the net descent direction is dominated by $\nabla_\boldsymbol{\phi} 	ext{SINR}_{m'}(\cdot)$ such that $	ext{SINR}_{m'}(\cdot)\geq	ext{SINR}_m(\cdot)$ for $m'\neq m\ \forall m$. 
@@ -41,9 +41,9 @@ which is weighted-some of $\nabla_\boldsymbol{\phi} 	ext{SINR}_m(\cdot)$ for $m=
 Following the chain rule of the partial derivatives, we can deduce the following.
 \begin{equation*}
     \nabla_\boldsymbol{\phi} f_m(\cdot) = 
-    \frac{\bs^H\mathbf{H}_m\bs\left\{\nabla_\boldsymbol{\phi} \bs^H\mathbf{G}_m\bs\right\}
-    - \bs^H\mathbf{G}_m\bs\left\{\nabla_\boldsymbol{\phi} \bs^H\mathbf{H}_m\bs\right\}}
-    {\left\{\bs^H\mathbf{H}_m\bs\right\}^2},
+    \frac{\mathbf{s}^H\mathbf{H}_m\mathbf{s}\left\{\nabla_\boldsymbol{\phi} \mathbf{s}^H\mathbf{G}_m\mathbf{s}\right\}
+    - \mathbf{s}^H\mathbf{G}_m\mathbf{s}\left\{\nabla_\boldsymbol{\phi} \mathbf{s}^H\mathbf{H}_m\mathbf{s}\right\}}
+    {\left\{\mathbf{s}^H\mathbf{H}_m\mathbf{s}\right\}^2},
 \end{equation*}
 and we show the following lemma about the first exact gradient of the \gls{sinr} with respect to phase-code to the best of our knowledge.
 
@@ -53,10 +53,10 @@ and we show the following lemma about the first exact gradient of the \gls{sinr}
     \begin{split}
         &\nabla_\boldsymbol{\phi} f_m(\boldsymbol{\phi})\\
         &=\beta_m\imag\left[\left\{
-        (\bs^H \mathbf{H}_m \bs)\mathbf{G}_m\bs-(\bs^H \mathbf{G}_m \bs)\mathbf{H}_m\bs\right\}\odot\bs^*\right].
+        (\mathbf{s}^H \mathbf{H}_m \mathbf{s})\mathbf{G}_m\mathbf{s}-(\mathbf{s}^H \mathbf{G}_m \mathbf{s})\mathbf{H}_m\mathbf{s}\right\}\odot\mathbf{s}^*\right].
     \end{split}
     \end{equation}
-    where $\beta_m=\frac{2}{(\bs^H \mathbf{G}_m \bs)^2}\in\bbC$.
+    where $\beta_m=\frac{2}{(\mathbf{s}^H \mathbf{G}_m \mathbf{s})^2}\in\mathbb{C}$.
 \end{lemma}
 
 \begin{proof}
