@@ -1,5 +1,6 @@
 # SRED
 For a fixed receive filter, we can reformulate the optimization problem with respect to $\mathbf{s}$ as follows:
+$$ a + b = c$$
 $$\max_{\mathbf{s}\in{\mathcal{S}^{N_tN}}}\ \min_{\forall m}\ \sinr_m(\mathbf{s},\bw_{m,\text{opt}})=\frac{\mathbf{s}^H\mathbf{H}_m(\bw_{m,\text{opt}})\mathbf{s}}{\mathbf{s}^H\mathbf{G}_m(\bw_{m,\text{opt}})\mathbf{s}}$$[equation id]
 
 As we solve \eqref{eq:prob_sinr_s} with fixed $\mathbf{w}_m\ \forall m$, we simplify $\mathbf{G}_m=\mathbf{G}_m(\mathbf{w}_m)$ and $\mathbf{H}_m=\mathbf{H}_m(\mathbf{w}_m)$ for brevity from this section.
