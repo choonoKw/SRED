@@ -1,6 +1,6 @@
 # SRED
 As we solve \eqref{eq:prob_sinr_s} with fixed $\mathbf{w}_m\ \forall m$, we simplify $\mathbf{G}_m=\mathbf{G}_m(\mathbf{w}_m)$ and $\mathbf{H}_m=\mathbf{H}_m(\mathbf{w}_m)$ for brevity from this section.
-To enforce a waveform to satisfy the \gls{cmc} in \eqref{eq:prob_sinr_s}, we aim to optimize the phase variable $\boldsymbol{\phi}$ such that $\boldsymbol{\phi}=[\phi_1,...,\phi_{N_tN}]^T$ and $e^{j\phi_i}=\sqrt{N_tN}s_i$ for $i=1,...,N_tN$. Therefore, any change in $\boldsymbol{\phi}$ still guarantees the \gls{cmc}. Additionally, we reformulate the problem in \eqref{eq:prob_sinr_s} as following with a lemma:
+To enforce a waveform to satisfy the constant modulus constraint (CMC) in \eqref{eq:prob_sinr_s}, we aim to optimize the phase variable $\boldsymbol{\phi}$ such that $\boldsymbol{\phi}=[\phi_1,...,\phi_{N_tN}]^T$ and $e^{j\phi_i}=\sqrt{N_tN}s_i$ for $i=1,...,N_tN$. Therefore, any change in $\boldsymbol{\phi}$ still guarantees the CMC. Additionally, we reformulate the problem in \eqref{eq:prob_sinr_s} as following with a lemma:
 \begin{lemma}\label{lemma:minimax}
     The local minima of the following problem such that $\mathbf{s}^H\mathbf{G}_m\mathbf{s}\neq 0$ and $\mathbf{s}^H\mathbf{H}_m\mathbf{s}\neq 0$ are equivalent to the ones of the problem in \eqref{eq:prob_sinr_s}.
     \begin{equation}\label{eq:prob_minimax}
@@ -13,7 +13,7 @@ To enforce a waveform to satisfy the \gls{cmc} in \eqref{eq:prob_sinr_s}, we aim
     See \cref{sec:proof_sum_of_reciprocal} of \cite{kweon2023technical}.
 \end{proof}
 
-However, minimax problems, especially in nonconvex setting, is hard to solve directly \cite{razaviyayn2020nonconvex, zhang2022sapd+,du1995minimax}. To address the minimax problem in \cref{eq:prob_sinr_s}, we define a new cost function $f(\boldsymbol{\phi})$ as the \textit{sum-of-reciprocals} of \glspl{sinr}, thereby, reformulate the minimax problem into the following minimization problem:
+However, minimax problems, especially in nonconvex setting, is hard to solve directly \cite{razaviyayn2020nonconvex, zhang2022sapd+,du1995minimax}. To address the minimax problem in \cref{eq:prob_sinr_s}, we define a new cost function $f(\boldsymbol{\phi})$ as the \textit{sum-of-reciprocals} of SINRs, thereby, reformulate the minimax problem into the following minimization problem:
 % shown in \eqref{eq:prob_sinr_s}:
 \begin{equation}
 \begin{split}
@@ -24,11 +24,11 @@ However, minimax problems, especially in nonconvex setting, is hard to solve dir
 \end{split}
 \label{eq:fphi}   
 \end{equation}
-where $f_m(\boldsymbol{\phi})$ is the reciprocal of $	ext{SINR}_m(\mathbf{s}(\boldsymbol{\phi}),\cdot)$. The choice of this new cost function is motivated from the efficiency of utilizing its exact descent (negative gradient) to maximize the worst-case \gls{sinr}, which is described in the following section.
+where $f_m(\boldsymbol{\phi})$ is the reciprocal of $	ext{SINR}_m(\mathbf{s}(\boldsymbol{\phi}),\cdot)$. The choice of this new cost function is motivated from the efficiency of utilizing its exact descent (negative gradient) to maximize the worst-case SINR, which is described in the following section.
 
 \subsection{Exact-Gradient of the Sum-of-Reciprocals}
 
-The motivations of formulating \eqref{eq:fphi} is 1) minimizing $f(\boldsymbol{\phi})$ can lead maximization of overall \gls{sinr}s, and 2) the gradient of the cost function can guide enhancing the worst case of \gls{sinr} among $K$ targets analytically. Expressing $\mathbf{s}=\mathbf{s}(\boldsymbol{\phi})$ for brevity, the gradient of the cost function becomes 
+The motivations of formulating \eqref{eq:fphi} is 1) minimizing $f(\boldsymbol{\phi})$ can lead maximization of overall SINRs, and 2) the gradient of the cost function can guide enhancing the worst case of SINR among $K$ targets analytically. Expressing $\mathbf{s}=\mathbf{s}(\boldsymbol{\phi})$ for brevity, the gradient of the cost function becomes 
 \begin{equation}\label{eq:grad_f_phi}
 \begin{split}
     &\nabla_\boldsymbol{\phi} f(\boldsymbol{\phi})=\sum_{m=1}^M \nabla_\boldsymbol{\phi} f_m(\boldsymbol{\phi})\\
@@ -45,7 +45,7 @@ Following the chain rule of the partial derivatives, we can deduce the following
     - \mathbf{s}^H\mathbf{G}_m\mathbf{s}\left\{\nabla_\boldsymbol{\phi} \mathbf{s}^H\mathbf{H}_m\mathbf{s}\right\}}
     {\left\{\mathbf{s}^H\mathbf{H}_m\mathbf{s}\right\}^2},
 \end{equation*}
-and we show the following lemma about the first exact gradient of the \gls{sinr} with respect to phase-code to the best of our knowledge.
+and we show the following lemma about the first exact gradient of the SINR with respect to phase-code to the best of our knowledge.
 
 \begin{lemma}\label{lemma:grad}
     The exact gradient of $f_m(\boldsymbol{\phi})$ with respect to the phase-code vector $\boldsymbol{\phi}$ is given by:
@@ -63,4 +63,4 @@ and we show the following lemma about the first exact gradient of the \gls{sinr}
     See \cref{sec:derive_grad} of \cite{kweon2023technical} for the detailed derivation of the gradient.
 \end{proof}
 
-Using the \textit{exact descent} direction of the \textit{sum-of-reciprocal} \gls{sinr} on the feasible set, \ie, $-\nabla_\boldsymbol{\phi} f_m(\boldsymbol{\phi})$, we update $\boldsymbol{\phi}$ following $\boldsymbol{\phi}^{t+1}=\boldsymbol{\phi}^{t}-\rho^t\nabla_\boldsymbol{\phi} f(\boldsymbol{\phi})$ where $t$ is the iteration in the $\phi$ update, and $\rho^t$ is the step size at $t^\text{th}$ iteration. This iterative algorithm is dubbed as \gls{sred}. \gls{sred} ensures convergence to a feasible local because it updates the phase of the \gls{cmc} waveforms directly without any relaxation. 
+Using the \textit{exact descent} direction of the \textit{sum-of-reciprocal} SINR on the feasible set, \ie, $-\nabla_\boldsymbol{\phi} f_m(\boldsymbol{\phi})$, we update $\boldsymbol{\phi}$ following $\boldsymbol{\phi}^{t+1}=\boldsymbol{\phi}^{t}-\rho^t\nabla_\boldsymbol{\phi} f(\boldsymbol{\phi})$ where $t$ is the iteration in the $\phi$ update, and $\rho^t$ is the step size at $t^\text{th}$ iteration. This iterative algorithm is dubbed as \gls{sred}. \gls{sred} ensures convergence to a feasible local because it updates the phase of the CMC waveforms directly without any relaxation. 
